@@ -1,73 +1,110 @@
-# React + TypeScript + Vite
+Hotel Booking App
+🏨 Layihə Haqqında
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bu layihə istifadəçilərə səyahət destinasyonlarını seçmək, otel və yemək planlarını (board type) təyin etmək və ümumi xərcləri hesablamaq imkanı verən dinamik bir hotel rezervasiya tətbiqidir.
 
-Currently, two official plugins are available:
+İstifadəçilər:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Vətəndaşlıq seçə bilər
 
-## React Compiler
+Səyahət tarixi və müddətini müəyyən edə bilər
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Gedəcəkləri ölkəni seçə bilər
 
-## Expanding the ESLint configuration
+Board type (Full Board, Half Board, No Board) seçə bilər
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Hər gün üçün otel və yemək seçimlərini edə bilər
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Seçimlərə əsasən gündəlik və ümumi məbləğ avtomatik hesablanır.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+🛠 Texniki Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Frontend: React.js + TypeScript
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+State Management: Redux Toolkit
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Styling: Tailwind CSS
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Build Tool: Vite
+
+⚡ Əsas Funksionallıqlar
+
+İlkin Konfiqurasiya Formu:
+
+Vətəndaşlıq, başlanğıc tarixi, gün sayı, destinasiya və board type seçimi
+
+Tarix sahəsi yalnız bugünkü və sonrakı tarixləri qəbul edir
+
+Form submit edildikdə toast mesajı göstərilir və form sıfırlanır
+
+Gündəlik Konfiqurasiya Cədvəli:
+
+Seçilmiş gün sayına uyğun satırlar yaradılır
+
+Otel və yemək seçimləri edilə bilər
+
+Board type qaydaları tətbiq olunur:
+
+FB (Full Board): Lunch və Dinner seçilə bilər
+
+HB (Half Board): Lunch və ya Dinner seçilə bilər (bir-birini istisna edən)
+
+NB (No Board): Yemək seçimi deaktiv edilir
+
+Ümumi Baxış və Qiymət Hesablanması:
+
+Seçilmiş konfiqurasiya göstərilir
+
+Hər günün seçimləri və günlük məbləğ göstərilir
+
+Ümumi məbləğ (Grand Total) hesablanır
+
+Submit & Reset:
+
+Booking submit edildikdə toast mesajı göstərilir
+
+Form sıfırlanır və bütün Redux state resetlənir (resetBooking action)
+
+UX Təkmilləşdirmələri:
+
+Tailwind CSS ilə responsive və müasir dizayn
+
+Focus və hover effektləri
+
+Button və inputlar istifadəçi dostu dizaynla hazırlanıb
+
+📝 Fayl Strukturu
+src/
+├─ components/
+│  ├─ InitialForm.tsx
+│  ├─ DailyTable.tsx
+│  └─ Summary.tsx
+├─ store/
+│  ├─ slices/
+│  │  └─ bookingSlice.ts
+│  └─ index.ts
+├─ data/
+│  ├─ data.ts
+│  └─ data.types.ts
+├─ App.tsx
+└─ main.tsx
+
+📌 Redux Slice (bookingSlice)
+
+State: citizenship, startDate, days, destination, boardType, daily
+
+Actions:
+
+setConfig
+
+setDays
+
+setDestination
+
+setBoardType
+
+setDailyHotel
+
+setDailyMeal
+
+resetBooking ✅ (submit sonrası formu sıfırlamaq üçün)
